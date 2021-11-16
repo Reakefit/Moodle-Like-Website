@@ -2,13 +2,13 @@ import express from 'express';
 import cors from 'cors';
 import mongoose from 'mongoose';
 
-import { URI } from './config/keys';
+import keys from './config/keys';
 
 const app = express();
 app.use(cors());
 app.use(express.json());
 
-mongoose.connect(URI, {useNewUrlParser: true, useUnifiedTopology: true})
+mongoose.connect(keys.URI, {useNewUrlParser: true, useUnifiedTopology: true})
 .then(console.log("Successfully connected to Database"))
 .catch(err => console.log(err));
 
