@@ -2,6 +2,7 @@ import express from 'express';
 const router = express.Router();
 
 import bcrypt from 'bcrypt';
+import jwt from 'jsonwebtoken';
 
 import { userValidate } from '../validations/user.js';
 import { loginValidate } from '../validations/login.js';
@@ -75,9 +76,29 @@ router.post('/login', (req, res) => {
                 res.status(400).json({email: "Email Not Found"});
             }
             bcrypt.compare(req.body.password, user.password)
-            .then(isMatch =>{
-                
-            })
+            .then(isMatch => {
+                if(isMatch) {
+                    const payload = {
+                        id: user.id,
+                        name: user.name
+                    };
+                    jwt.sign(
+                        payload,
+                        secret,
+                        {
+                            expiresIn: 31556926
+                        },
+                        (err, token) => {
+                            res.json({
+                                success: true,
+                                token: "Bearer " + token 
+                            });
+                        }
+                    );
+                } else {
+                    return res.status(400).json({passwordincorrect: "Password Incorrect"});
+                }
+            });
         })
     }
 })
