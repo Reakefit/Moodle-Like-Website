@@ -8,7 +8,7 @@ import user from './routes/users.js';
 
 const app = express();
 app.use(cors());
-app.use(express.json());
+app.use(express.urlencoded({extended: true}));
 
 mongoose.connect(URI, {useNewUrlParser: true, useUnifiedTopology: true})
 .then(console.log("Successfully connected to Database"))
