@@ -1,7 +1,7 @@
 import Validator from 'validator';
 import isEmpty from 'is-empty';
 
-export const validate = (data) => {
+export const loginValidate = (data) => {
     let errors = {};
 
     data.email = !isEmpty(data.email) ? data.email : "";
