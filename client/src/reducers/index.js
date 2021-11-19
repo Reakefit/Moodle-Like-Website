@@ -1,6 +1,9 @@
-/*import { combineReducers } from "redux";
+import { combineReducers } from "redux";
 
+import authReducer from "./AuthReducer";
+import errorReducer from "./ErrorReducer";
 
 export default combineReducers({
-    courses,
-});*/
+    auth: authReducer,
+    errors: errorReducer
+});

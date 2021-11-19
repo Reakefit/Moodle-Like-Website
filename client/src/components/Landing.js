@@ -1,10 +1,10 @@
 import { Link } from 'react-router-dom';
-import image from '../images/511752.jpg';
+import image from './images/511752.jpg';
 import Navbar from './Navbar';
 
 const Landing = () => {
     return (
-        <><Navbar/>
+        <>
         <div style={{ height: "75vh" }} className="container valign-wrapper">
         <div className="row">
           <div className="col s12 center-align">
