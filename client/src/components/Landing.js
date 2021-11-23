@@ -1,6 +1,5 @@
 import { Link } from 'react-router-dom';
 import image from './images/511752.jpg';
-import Navbar from './Navbar';
 
 const Landing = () => {
     return (

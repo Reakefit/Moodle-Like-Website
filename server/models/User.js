@@ -1,8 +1,14 @@
 import mongoose from "mongoose";
+import bcryptjs from 'bcryptjs';
 
 const Schema = mongoose.Schema;
 
 const UserSchema = new Schema({
+      userId: {
+        type: Number,
+        required: true,
+        maxlength: 9
+      },
       name: {
         type: String,
         required: true
@@ -15,18 +21,25 @@ const UserSchema = new Schema({
         type: String,
         required: true
       },
-      date: {
-        type: Date,
-        default: Date.now
-      },
-      courses: {
-        type: [String],
-        default: []
-      },
       credits: {
         type: Number,
         default: 0
+      },
+      isAdmin: {
+        type: Boolean,
+        default: false
       }
+}, {
+  timestamps: true
 })
 
-export const User = mongoose.model("users", UserSchema);
+UserSchema.methods.generateHash = (password) => {
+  return bcryptjs.hashSync(password, bcryptjs.genSaltSync(8),null);
+}
+
+UserSchema.methods.validPassword = function(password) {
+  return bcryptjs.compareSync(password,this.password);
+};
+
+
+export const User = mongoose.model("User", UserSchema);

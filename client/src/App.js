@@ -1,26 +1,12 @@
-import { BrowserRouter, Route, Switch } from "react-router-dom";
+import React from 'react';
+import { BrowserRouter, Route, Routes } from "react-router-dom";
 import jwt_decode from "jwt-decode";
 import setAuthToken from "./utils/setAuthToken";
-import { setCurrentUser, logoutUser } from "./actions/AuthActions";
-import Login from "./components/auth/Login";
+import { setCurrentUser, logoutUser, loginUser } from "./actions/AuthActions";
+import Login from './components/auth/Login';
 import Home from "./Pages/Home";
-
+import store from './store';
 import { Provider } from 'react-redux';
-import { createStore, applyMiddleware, compose } from 'redux';
-import thunk from 'redux-thunk';
-
-import reducers from './reducers';
-const middleware = [thunk];
-const initialState = {};
-
-const store = createStore(
-  reducers,
-  initialState,
-  compose(
-      applyMiddleware(...middleware),
-      window.__REDUX_DEVTOOLS_EXTENSION__ &&
-       window.__REDUX_DEVTOOLS_EXTENSION__()
-));
 
 if (localStorage.jwtToken) {
 
@@ -45,8 +31,10 @@ const App = () => {
     <div className="App">
       <Provider store={store}>
         <BrowserRouter>
-          <Route exact path='/' component={Home} />
-          <Route exact path='/login' component={Login} />
+          <Routes>
+            <Route exact path='/' element={<Home />} />
+            <Route exact path='/login' element={<Login />} />
+          </Routes>
         </BrowserRouter>  
       </Provider>    
     </div>
