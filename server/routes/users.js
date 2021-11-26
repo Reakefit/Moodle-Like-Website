@@ -160,7 +160,6 @@ router.get("/auth", auth, (req, res) => {
 
 router.get("/userCourse", auth, (req, res) => {
     const userId = req.cookies["userId"] || req.query.userId;
-    console.log(userId);
     UserCourses.aggregate([
         {
             $match: { userId: userId },
@@ -207,13 +206,13 @@ router.post("/addCourse", auth, (req, res)=> {
     console.log(req.body.userId || req.query.userId);
 
     const userId = req.cookies["userId"] || req.query.userId;
-    const courseId = req.query.courseId;
+    const courseId = req.body.courseId;
     if (!courseId) {
       res.json("No such course exists");
     }
     UserCourses.updateOne(
       { userId: userId.trim() },
-      { userId: userId, $push: { courses: courseId } },
+      { userId: userId, $addToSet: { courses: courseId } },
       { upsert: true }
     )
     .then(() => {

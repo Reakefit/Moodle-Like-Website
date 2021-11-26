@@ -79,9 +79,6 @@ class LoggedNavbar extends Component {
                             <Link id='AddCourse' to='/AddCourses'>Add Courses</Link>
                         </li>
                         <li>
-                            <Link id='Schedule' to='/Schedule'>Schedule</Link>
-                        </li>
-                        <li>
                             <button
                                 style={{
                                   marginTop: "0.4rem",
@@ -105,9 +102,6 @@ class LoggedNavbar extends Component {
                 </li>
                 <li>
                     <Link id='AddCourse' to='/AddCourses'>My Courses</Link>
-                </li>
-                <li>
-                    <Link id='Schedule' to='/Schedule'>My Courses</Link>
                 </li>
                 <li>
                     <button

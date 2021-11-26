@@ -4,10 +4,10 @@ const router = express.Router();
 import { auth } from '../middleware/auth.js';
 import { Course } from '../models/Course.js'
 
-router.post('/', auth, (req, res) => {
+router.get('/', auth, (req, res) => {
     console.log("test")
     const page = req.query.page || 1;
-    const nPerPage = req.query.nPerPage || 2000;
+    const nPerPage = req.query.nPerPage || 3;
 
     Course.find()
     .skip(page > 0 ? (page - 1) * nPerPage : 0)
@@ -100,7 +100,23 @@ router.get("/search", auth, (req, res) => {
   const value = req.query.value;
 
   Course.find({
-      course_id: value,
+    $or: [
+      { courseID: { $regex: ".*" + value + ".*" , $options:'i'} },
+      { courseName: { $regex: ".*" + value + ".*", $options:'i' } },
+    ],
+  })
+    .limit(10)
+    .then((response) => {
+      res.json(response);
+    })
+    .catch((err) => res.status(400).json("Error: " + err));
+});
+
+router.get("/display", auth, (req, res) => {
+  const value = req.query.value;
+
+  Course.find({
+    _id: value
   })
     .then((response) => {
       res.json(response);

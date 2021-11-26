@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import Cookie from 'js-cookie';
 import axios from 'axios';
 import CourseBlock from './CourseBlock';
+import LoggedNavbar from '../layout/LoggedNavbar';
+import isEmpty from 'is-empty';
 
 class MyCourses extends Component {
     constructor(props) {
@@ -9,14 +11,13 @@ class MyCourses extends Component {
         this.fetchCourses = this.fetchCourses.bind(this);
 
         this.state = {
-            default: [],
             userCourse: [],
             data: [],
-            page: 1,
             courseId: [],
             userId: "",
             courseID: "",
             search: "",
+            key: 0
         }
     }
     
@@ -40,18 +41,21 @@ class MyCourses extends Component {
     }
 
     handleDisplayingCourses = () => {
-        if (!this.state.userCourse) {
-          return <p>You haven't registered in any courses</p>
+        if (isEmpty(this.state.userCourse)) {
+          return <h4>You haven't registered in any courses, Please Enroll under Add Courses</h4>
         } else {
-          return (this.state.userCourse.map(course => (<div className="col s2"><CourseBlock courseID={course}/></div>)))
+          return (this.state.userCourse.map(course => (<div className="col s2"><CourseBlock courseID={course} key={this.state.key}/></div>)))
         }
     }
     
     render() {
+        
         return (
-            <div className='row'>
+            <><LoggedNavbar />
+            <div className='row' key={this.state.key}>
                 {this.handleDisplayingCourses()}
             </div>
+            </>
         )
     } 
 }

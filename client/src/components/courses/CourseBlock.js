@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Link} from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import axios from 'axios';
 import Cookie from 'js-cookie';
 
@@ -7,8 +7,10 @@ class CourseBlock extends Component {
   constructor(props) {
     super(props);
     this.fetchCourseDetails = this.fetchCourseDetails.bind(this);
+    this.unenroll = this.unenroll.bind(this);
 
     this.state = {
+      _id: "",
       courseID: "",
       image: "",
       description: "",
@@ -22,7 +24,7 @@ class CourseBlock extends Component {
 
   fetchCourseDetails() {
     axios.get(
-      "http://localhost:5000/api/courses/search?token="+
+      "http://localhost:5000/api/courses/display?token="+
       Cookie.get("token") +
       "&userId=" +
       Cookie.get("userId") +
@@ -32,13 +34,28 @@ class CourseBlock extends Component {
     .then(res => {
       console.log(res.data[0])
       this.setState({
+        _id: res.data[0]._id,
         courseID: res.data[0].courseID,
         image: res.data[0].image,
         description: res.data[0].description,
         courseName: res.data[0].courseName
       })
     })
-    .catch(err => console.log(err.response.data));
+    .catch(err => console.log(err.response));
+  }
+
+  unenroll(e) {
+    e.preventDefault();
+    axios.post(
+    "http://localhost:5000/api/users/removeCourse?token="+
+    Cookie.get("token") +
+    "&userId=" +
+    Cookie.get("userId") +
+    "&courseId=" +
+    this.state._id
+    )
+    .then(window.location.reload())
+    .catch(err => console.log(err.response));
   }
 
   render() {
@@ -54,7 +71,8 @@ class CourseBlock extends Component {
         <div className="card-reveal">
           <span className="card-title grey-text text-darken-6">{this.state.courseID}<i className="material-icons right">close</i></span>
           <p>{this.state.description}</p>
-          <button className="btn btn-small waves-effect waves-light hoverable red accent-3 bottom">Unenroll</button>
+          <button className="btn btn-small waves-effect waves-light hoverable red accent-3 bottom"
+          onClick={this.unenroll}>Unenroll</button>
         </div>
       </div>
     )

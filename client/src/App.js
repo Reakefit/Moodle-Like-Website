@@ -5,6 +5,7 @@ import Home from "./Pages/Home";
 import Register from './components/auth/Register';
 import StudentLogin from './Pages/StudentLogin';
 import MyCoursePage from './Pages/MyCoursePage';
+import AddCoursePage from './Pages/AddCoursePage';
 
 const App = () => {
   return (
@@ -16,6 +17,7 @@ const App = () => {
           <Route exact path='/register' element={<Register />} />
           <Route exact path='/Home' element={<StudentLogin />} />
           <Route exact path='/UserCourses' element={<MyCoursePage />} />
+          <Route exact path='/AddCourses' element={<AddCoursePage />} />
         </Routes>
       </BrowserRouter> 
     </div>
