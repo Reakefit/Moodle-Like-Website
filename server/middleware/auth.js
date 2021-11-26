@@ -1,12 +1,13 @@
 import jwt from 'jsonwebtoken';
 import { UserSession } from '../models/UserSession.js';
+import { secret } from '../config/keys.js';
 
-module.exports = (req, res, next) => {
+export const auth = (req, res, next) => {
     try {
         const token = req.cookies['token'] || req.query.token;
         const userIdCookie = req.cookies['userId'] || req.query.userId;
 
-        const decodedToken = jwt.verify(token, 'RANDOM_TOKEN_SECRET');
+        const decodedToken = jwt.verify(token, secret);
         const userId = decodedToken.userId;
 
         if (userIdCookie !== userId) {
@@ -15,12 +16,13 @@ module.exports = (req, res, next) => {
 
             UserSession.findOne({ userId: userId })
                 .then((session) => {
+                    console.log(session.token)
 
                     if(session && session.token === token)
                         next();
                     else
                         res.status(401).json({
-                            error: new Error('Invalid token or not stored!')
+                            error: 'Invalid token or not stored!'
                         });
                 })
                 .catch((err) => {

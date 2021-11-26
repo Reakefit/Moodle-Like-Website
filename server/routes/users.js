@@ -10,6 +10,7 @@ import { User } from '../models/User.js';
 import { UserSession } from '../models/UserSession.js';
 import { auth } from '../middleware/auth.js';
 import { secret } from '../config/keys.js';
+import { UserCourses } from '../models/UserCourse.js';
 
 // GET request to get user imformation
 // ROUTE: api/users/ - we use cookies for this
@@ -28,7 +29,6 @@ router.route('/').get(auth, (req, res) => {
 });
 
 // POST request to create a new user api/users/register
-// PARAMS: (name, email, password, password2)
 router.post('/register', (req, res) => {
     console.log(req.body);
     const {errors, isValid} = userValidate(req.body);
@@ -38,18 +38,17 @@ router.post('/register', (req, res) => {
     }
 
     User.findOne({
-        email: req.body.email
+        userId: req.body.userId
     })
     .then(user => {
         if(user) {
-            return res.status(400).json({email: "Email already exists"});
+            return res.status(400).json({userId: "userId already exists"});
         } else {
             const newUser = new User({
                 name: req.body.name,
-                email: req.body.email,
+                userId: req.body.userId,
                 password: req.body.password,
-                credits:req.body.credits,
-                date: new Date()
+                isAdmin: req.body.isAdmin
             });
 
             newUser.password = newUser.generateHash(req.body.password);
@@ -71,7 +70,6 @@ router.post('/register', (req, res) => {
 });
 
 // POST request to login api/users/login
-// PARAMS: (email, password)
 router.post('/login', (req, res) => {
     const {errors, isValid} = loginValidate(req.body);
 
@@ -79,52 +77,50 @@ router.post('/login', (req, res) => {
         res.status(400).json(errors);
     } else {
         User.findOne({
-            email: req.body.email
+            userId: req.body.userId
         }).then(user => {
             if (!user) {
                 res.status(400).json({
-                    email: "Email Not Found",
-                    error: new Error("Email not found")
+                    userIdnotfound: "userId Not Found",
             });
-            }
-            if (user.validPassword(req.body.password)) {
-                const token = jwt.sign({ userId: user._id }, secret, {
-                    expiresIn: "24h",
-                });
+            }else {
+              if (user.validPassword(req.body.password)) {
+                  const token = jwt.sign({ userId: user._id }, secret, {
+                      expiresIn: "24h",
+                  });
 
-                UserSession.replaceOne(
-                    { userId: user._id },
-                    { userId: user._id, token: token },
-                    { upsert: true }
-                )
-                .then((session) => {
-                    if (user.isAdmin) {
-                        res.status(200).json({
-                            userId: user._id,
-                            token: token,
-                            expiresIn: 1,
-                            isAdmin: true,
-                        });
-                    } else {
-                        res.status(200).json({
-                            userId: user._id,
-                            token: token,
-                            expiresIn: 1,
-                            isAdmin: false,
-                            name: user.name,
-                            email: user.email,
+                  UserSession.replaceOne(
+                      { userId: user._id },
+                      { userId: user._id, token: token },
+                      { upsert: true }
+                  )
+                  .then((session) => {
+                      if (user.isAdmin) {
+                          res.status(200).json({
+                              userId: user._id,
+                              token: token,
+                              expiresIn: 1,
+                              isAdmin: true,
                           });
-                    }
-                })
-                .catch((err) => {
-                    res.status(401).json(err);
-                });
+                      } else {
+                          res.status(200).json({
+                              userId: user._id,
+                              token: token,
+                              expiresIn: 1,
+                              isAdmin: false,
+                              name: user.name,
+                            });
+                      }
+                  })
+                  .catch((err) => {
+                      res.status(401).json(err);
+                  });
             } else {
                 return res.status(401).json({
-                    message: "incorrect password",
-                    error: new Error("Incorrect password!")
+                    passwordincorrect: "incorrect password",
                 });
             }
+          }
         })
         .catch((error) => {
             res.status(500).json({
@@ -134,7 +130,7 @@ router.post('/login', (req, res) => {
     }
 });
 
-router.get('/logout', (req, res) => {
+router.get('/logout', auth, (req, res) => {
     const userId = req.cookies["userId"] || req.query.userId;
     res.clearCookie("token");
     res.clearCookie("userId");
@@ -148,20 +144,21 @@ router.get('/logout', (req, res) => {
     });
 });
 
-router.route("/userInfo").get(auth, (req, res) => {
+router.get("/userInfo", auth, (req, res) => {
     User.findOne({ userId: req.body.userId }).then((user) => {
         res.status(200).json({
         name: user.name,
-        email: user.email,
+        userId: user.userId,
         });
     });
 });
 
-router.route("/auth").get(auth, (req, res) => {
+router.get("/auth", auth, (req, res) => {
+    console.log(req);
     res.status(200).json("True");
 });
 
-router.route("/userCourse").get(auth, (req, res) => {
+router.get("/userCourse", auth, (req, res) => {
     const userId = req.cookies["userId"] || req.query.userId;
     console.log(userId);
     UserCourses.aggregate([
@@ -197,7 +194,7 @@ router.route("/userCourse").get(auth, (req, res) => {
           },
         ]).exec((err, result) => {
             if (err) {
-              res.status(500).json(err);
+              res.status(500).json(err.message);
             }
             if (result) {
               if (result.length === 0) res.status(400).json("Error: Data not found");
@@ -206,11 +203,11 @@ router.route("/userCourse").get(auth, (req, res) => {
           });
 });
 
-router.route("/addCourse").post(auth, (req, res)=> {
+router.post("/addCourse", auth, (req, res)=> {
     console.log(req.body.userId || req.query.userId);
 
     const userId = req.cookies["userId"] || req.query.userId;
-    const courseId = req.body.courseId;
+    const courseId = req.query.courseId;
     if (!courseId) {
       res.json("No such course exists");
     }
@@ -222,10 +219,10 @@ router.route("/addCourse").post(auth, (req, res)=> {
     .then(() => {
       res.json("courseId updated");
     })
-    .catch((err) => res.status(401).json("Error: " + err));
+    .catch((err) => res.status(401).json("Error: " + err.response));
 });
 
-router.route("/removeCourse").post(auth, (req, res)=> {
+router.post("/removeCourse", auth, (req, res)=> {
     const userId = req.cookies["userId"] || req.query.userId;
     const courseId = req.query.courseId;
     if (!courseId) {
@@ -243,7 +240,7 @@ router.route("/removeCourse").post(auth, (req, res)=> {
     .catch((err) => res.status(401).json(err));
 });
 
-router.route("/setUserCourses").post(auth, (req, res)=>{
+router.post("/setUserCourses", auth, (req, res)=>{
     console.log(req.body.userId || req.query.userId);
     UserCourses.replaceOne(
         { userId: req.body.userId },

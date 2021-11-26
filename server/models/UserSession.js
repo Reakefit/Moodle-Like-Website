@@ -4,13 +4,15 @@ const Schema = mongoose.Schema;
 const UserSessionSchema = new Schema({
     userId: {
         type: String,
-        required: true
+        required: true,
+        unique: true
     },
-    courses: {
-        type: Array
+    token: {
+        type: String,
+        required: true
     }
 }, {
     timestamps: true
 })
 
-module.exports = UserSession = mongoose.model("UserSession", UserSessionSchema);
+export const UserSession = mongoose.model("UserSession", UserSessionSchema);

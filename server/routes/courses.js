@@ -4,7 +4,8 @@ const router = express.Router();
 import { auth } from '../middleware/auth.js';
 import { Course } from '../models/Course.js'
 
-router.route("/").get(auth, (req, res) => {
+router.post('/', auth, (req, res) => {
+    console.log("test")
     const page = req.query.page || 1;
     const nPerPage = req.query.nPerPage || 2000;
 
@@ -25,13 +26,13 @@ router.route("/").get(auth, (req, res) => {
     .catch((err) => res.status(400).json("Error: " + err));
 });
 
-router.post('/add').post((req, res) => {
+router.post('/add', (req, res) => {
     addCourse(
         req.body.courseID,
         req.body.courseName,
         req.body.professorName,
-        req.body.slot,
         req.body.capacity,
+        req.body.credits,
         req.body.description,
         req.body.image,
         req.body.prerequisites,
@@ -45,12 +46,14 @@ router.post('/add').post((req, res) => {
     .catch((err) => res.status(400).json("Error: " + err));
 });
 
+export default router;
+
 async function addCourse(
     courseID,
     courseName,
     professorName,
-    slot,
     capacity,
+    credits,
     description,
     image,
     prerequisites,
@@ -60,8 +63,8 @@ async function addCourse(
         courseID: courseID,
         courseName: courseName,
         professorName: professorName,
-        slot: slot,
         capacity: capacity,
+        credits: credits,
         description: description,
         image: image,
         prerequisites: prerequisites,
@@ -75,12 +78,12 @@ async function addCourse(
     }
 }
 
-router.route("/update").post((req, res) => {
+router.post("/update", (req, res) => {
       Course.replaceOne(
         { course_id: req.body.course_id },
         { course_name: req.body.course_name, prerequisite: req.body.prerequisite },
         { upsert: true }
-      ) //This will create one if could found.
+      )
         .then(() => {
           res.status(201).json({
             message: "Course updated successfully!",
@@ -89,20 +92,16 @@ router.route("/update").post((req, res) => {
         .catch((error) => {
           res.status(500).json({
             error: error,
-          });
         });
     });
+});
 
-router.route("/search").get(auth, (req, res) => {
+router.get("/search", auth, (req, res) => {
   const value = req.query.value;
 
   Course.find({
-    $or: [
-      { course_id: { $regex: ".*" + value + ".*" } },
-      { course_name: { $regex: ".*" + value + ".*" } },
-    ],
+      course_id: value,
   })
-    .limit(10)
     .then((response) => {
       res.json(response);
     })

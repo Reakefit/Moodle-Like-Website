@@ -14,10 +14,6 @@ const courseSchema = new Schema({
         type: String,
         required: true
     },
-    slot: {
-        type: String,
-        required: true
-    },
     capacity: {
         type: Number,
         default: 100
@@ -41,4 +37,4 @@ const courseSchema = new Schema({
     }
 });
 
-module.exports = Course = mongoose.model("Course", courseSchema);
+export const Course = mongoose.model("Course", courseSchema);
