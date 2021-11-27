@@ -6,6 +6,11 @@ import Register from './components/auth/Register';
 import StudentLogin from './Pages/StudentLogin';
 import MyCoursePage from './Pages/MyCoursePage';
 import AddCoursePage from './Pages/AddCoursePage';
+import AdminHome from './Pages/AdminHome';
+import AdminCourses from './components/admin/AdminCourses';
+import EditCourse from './components/admin/EditCourse';
+import AdminNewCourse from './components/admin/AdminNewCourse';
+import AdminStudents from './components/admin/AdminStudents';
 
 const App = () => {
   return (
@@ -18,6 +23,11 @@ const App = () => {
           <Route exact path='/Home' element={<StudentLogin />} />
           <Route exact path='/UserCourses' element={<MyCoursePage />} />
           <Route exact path='/AddCourses' element={<AddCoursePage />} />
+          <Route exact path='/AdminHome' element={<AdminHome />} />
+          <Route exact path='/AdminCourses' element={<AdminCourses />} />
+          <Route path='/EditCourse' element={<EditCourse />} />
+          <Route exact path='/AdminNewCourse' element={<AdminNewCourse />} />
+          <Route exact path='/AdminStudents' element={<AdminStudents />} />
         </Routes>
       </BrowserRouter> 
     </div>

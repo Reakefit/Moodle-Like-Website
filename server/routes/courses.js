@@ -2,12 +2,12 @@ import express from 'express';
 const router = express.Router();
 
 import { auth } from '../middleware/auth.js';
-import { Course } from '../models/Course.js'
+import { Course } from '../models/Course.js';
+import { courseValidate } from '../validations/course.js';
 
 router.get('/', auth, (req, res) => {
-    console.log("test")
     const page = req.query.page || 1;
-    const nPerPage = req.query.nPerPage || 3;
+    const nPerPage = req.query.nPerPage || 2000;
 
     Course.find()
     .skip(page > 0 ? (page - 1) * nPerPage : 0)
@@ -27,6 +27,13 @@ router.get('/', auth, (req, res) => {
 });
 
 router.post('/add', (req, res) => {
+
+    const {errors, isValid} = courseValidate(req.body);
+
+    if (!isValid) {
+      return res.status(400).json(errors);
+    }
+
     addCourse(
         req.body.courseID,
         req.body.courseName,
@@ -79,20 +86,33 @@ async function addCourse(
 }
 
 router.post("/update", (req, res) => {
-      Course.replaceOne(
-        { course_id: req.body.course_id },
-        { course_name: req.body.course_name, prerequisite: req.body.prerequisite },
-        { upsert: true }
-      )
-        .then(() => {
-          res.status(201).json({
-            message: "Course updated successfully!",
-          });
-        })
-        .catch((error) => {
-          res.status(500).json({
-            error: error,
-        });
+  const {errors, isValid} = courseValidate(req.body);
+
+  if (!isValid) {
+    return res.status(400).json(errors);
+  }
+  Course.replaceOne(
+    { courseID: req.body.courseID },
+    { 
+      courseID: req.body.courseID,
+      courseName: req.body.courseName,
+      professorName: req.body.professorName,
+      capacity: req.body.capacity,
+      credits: req.body.credits,
+      description: req.body.description,
+      image: req.body.image,
+      Url: req.body.Url},
+    { upsert: true }
+  )
+    .then(() => {
+      res.status(201).json({
+        message: "Course updated successfully!",
+      });
+    })
+    .catch((error) => {
+      res.status(500).json({
+        error: error,
+    });
     });
 });
 

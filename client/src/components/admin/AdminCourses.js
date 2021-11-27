@@ -1,13 +1,13 @@
 import React, { Component } from 'react';
-import Cookie from 'js-cookie';
-import axios from 'axios';
-import LoggedNavbar from '../layout/LoggedNavbar';
+import axios from "axios";
+import Cookie from "js-cookie";
+import AdminNavbar from '../layout/AdminNavbar';
 
-class AddCourses extends Component {
+class AdminCourses extends Component {
     constructor(props) {
         super(props);
         this.updateTable = this.updateTable.bind(this);
-        this.onAddItem = this.onAddItem.bind(this);
+        this.EditItem = this.EditItem.bind(this);
         this.onSearch = this.onSearch.bind(this);
 
         this.state = {
@@ -43,29 +43,13 @@ class AddCourses extends Component {
         });
     }
 
-    async onAddItem(course) {
-        console.log("adding")
-        axios
-        .post(
-          "http://localhost:5000/api/users/addCourse?token=" +
-            Cookie.get("token") +
-            "&userId=" +
-            Cookie.get("userId"),
-            { courseId: course }
-        )
-        .then((res) => {
-          console.log("Success");
-        })
-        .catch((err) => alert("Error: " + err));
+    EditItem(course) {
+        console.log(course)
+        window.location.href = '/EditCourse?value='+course
+        return false;
     }
 
     onSearch(e) {
-        console.log("http://localhost:5000/api/courses/search?value=" +
-        e.target.value +
-        "&token=" +
-        Cookie.get("token") +
-        "&userId=" +
-        Cookie.get("userId"))
         e.preventDefault();
         this.setState({
           search: e.target.value,
@@ -92,28 +76,19 @@ class AddCourses extends Component {
           console.log(res.data);
           this.setState({ data: res.data });
         })
-        .catch((err) => {
-          alert("Error: " + err);
-        });
     }
 
     render() {
         return (
             <>
-            <LoggedNavbar />
-            <div className="addCourses">
-            <div className="menu">
-              <div className="line1"></div>
-              <div className="line2"></div>
-              <div className="line3"></div>
-            </div>
+            <AdminNavbar />
             <div className="nav-wrapper">
               <div className="search">
                 <form className="input-field">
                   <input
                     type="search"
                     id="search"
-                    placeholder="Press Enter to reset page"
+                    placeholder="Search by CourseID or Course Name"
                     value={this.state.search}
                     onChange={this.onSearch}                    
                   />
@@ -167,15 +142,13 @@ class AddCourses extends Component {
                         </td>
                         <td>
                           <div className="button">
-                            <form>
                               <button
                                 id="work"
                                 className="btn btn-small waves-effect waves-light hoverable red accent-3"
-                                onClick={() => this.onAddItem(item._id)}
+                                onClick={() => this.EditItem(item.courseID)}
                               >
-                                Add
+                                Edit
                               </button>
-                            </form>
                           </div>
                         </td>
                       </tr>
@@ -184,10 +157,9 @@ class AddCourses extends Component {
                 </tbody>
               </table>
             </div>
-        </div>
         </>
         )
     }
 }
 
-export default AddCourses
+export default AdminCourses

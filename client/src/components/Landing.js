@@ -15,7 +15,7 @@ const Landing = () => {
             <h4>
               <b>Login or Register</b> to use the student portal
             </h4>
-            <p className="flow-text grey-text text-darken-1">
+            <p className="flow-text grey-text text-darken-1 middle">
               Please login to access courses and assignments, if you are a new student
               register in the portal before you can access all your courses.
             </p>

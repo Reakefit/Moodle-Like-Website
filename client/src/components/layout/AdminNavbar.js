@@ -4,7 +4,7 @@ import axios from 'axios';
 import { Link } from 'react-router-dom';
 import { Navigate } from "react-router-dom";
 
-class LoggedNavbar extends Component {
+class AdminNavbar extends Component {
     constructor(props) {
         super(props);
         this.logout = this.logout.bind(this)
@@ -66,17 +66,20 @@ class LoggedNavbar extends Component {
             <div className='navbar-fixed'>
             <nav>
                 <div className='nav-wrapper'>
-                    <Link className="brand-logo" to='/Home'>
+                    <Link className="brand-logo" to='/AdminHome'>
                         <i className='material-icons' style={{fontSize: 30}}>school</i>
                         BLACKBOARD
                     </Link>
                     <a href='/Home' data-target="mobile-demo" className="sidenav-trigger"><i className="material-icons">menu</i></a>
                     <ul className="right hide-on-med-and-down">
                         <li>
-                            <Link id='MyCourses' to='/UserCourses'>My Courses</Link>
+                            <Link id='NewCourse' to='/AdminNewCourse'>Create Course</Link>
                         </li>
                         <li>
-                            <Link id='AddCourse' to='/AddCourses'>Add Courses</Link>
+                            <Link id='ManageCourses' to='/AdminCourses'>Manage Courses</Link>
+                        </li>
+                        <li>
+                            <Link id='ManageStudents' to='/AdminStudents'>View Students</Link>
                         </li>
                         <li>
                             <button
@@ -124,4 +127,4 @@ class LoggedNavbar extends Component {
     }
 }
 
-export default LoggedNavbar
+export default AdminNavbar

@@ -14,7 +14,7 @@ import { UserCourses } from '../models/UserCourse.js';
 
 // GET request to get user imformation
 // ROUTE: api/users/ - we use cookies for this
-router.route('/').get(auth, (req, res) => {
+router.get('/', auth, (req, res) => {
     const userId = req.cookies["userId"] || req.body.userId;
 
     User.findById(userId)
@@ -28,7 +28,64 @@ router.route('/').get(auth, (req, res) => {
     .catch((err) => res.status(400).json("Error: " + err));
 });
 
-// POST request to create a new user api/users/register
+router.get('/allUsers', (req, res) => {
+  const page = req.query.page || 1;
+  const nPerPage = req.query.nPerPage || 2000;
+
+  User.find(
+    {isAdmin: false}
+  )
+  .skip(page > 0 ? (page - 1) * nPerPage : 0)
+    .limit(nPerPage)
+    .then((response) => {
+      User.count()
+        .then((count) => {
+          if (count === 0) {
+            res.status(400).json({
+              "zeroStudents" : "Zero students registered"
+            })
+          }
+          res.json({
+            array: response,
+            count: count,
+            nbOfPage: Math.ceil(count / nPerPage),
+          });
+        })
+        .catch((err) => res.status(400).json("Error: " + err));
+    })
+    .catch((err) => res.status(400).json("Error: " + err));
+});
+
+router.get('/search', (req, res) => {
+  const value = req.query.value;
+
+  User.find({
+    $and: [
+      { name: { $regex: ".*" + value + ".*", $options:'i'} },
+      { isAdmin: false }
+    ],
+  })
+    .limit(10)
+    .then((response) => {
+      res.json(response);
+    })
+    .catch((err) => res.status(400).json("Error: " + err));
+})
+
+router.post('/delete', (req, res) => {
+  const userId = req.body._id
+  if (!userId) {
+    res.json("Enter user to delete");
+  }
+  User.findOneAndDelete({ _id: userId })
+  .then(() => {
+    res.status(200).json("Done!");
+  })
+  .catch((err) => {
+    res.status(400).json("Error: " + err);
+  });
+});
+
 router.post('/register', (req, res) => {
     console.log(req.body);
     const {errors, isValid} = userValidate(req.body);

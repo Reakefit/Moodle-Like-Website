@@ -1,11 +1,11 @@
 import React from "react";
-import LoggedNavbar from "../components/layout/LoggedNavbar";
+import AdminNavbar from "../components/layout/AdminNavbar";
 
-const StudentLogin = () => {
+const AdminHome = () => {
     return (
         <>
-            <LoggedNavbar />
-            <h4 className="center-align" style={{marginTop: "35vh"}}>Welcome, Use the NavBar to navigate and view your courses or add new courses.</h4>
+            <AdminNavbar />
+            <h4 className="center-align" style={{marginTop: "35vh"}}>Welcome Admin, here you can create new courses, manage existing courses and manage students</h4>
             <div className="flex-wrapper"
             style={{display: "flex",
                 minHeight: "54vh",
@@ -32,4 +32,4 @@ const StudentLogin = () => {
     )
 }
 
-export default StudentLogin
+export default AdminHome

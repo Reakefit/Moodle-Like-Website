@@ -17,7 +17,8 @@ class MyCourses extends Component {
             userId: "",
             courseID: "",
             search: "",
-            key: 0
+            key: 0,
+            notRegistered: false
         }
     }
     
@@ -37,12 +38,11 @@ class MyCourses extends Component {
                 userCourse: res.data[0].courses,
             });
         })
-        .catch((err) => alert("Error: " + err));
     }
 
     handleDisplayingCourses = () => {
-        if (isEmpty(this.state.userCourse)) {
-          return <h4>You haven't registered in any courses, Please Enroll under Add Courses</h4>
+        if (this.state.userCourse.length === 0) {
+          return <h4 className="center-align" style={{marginTop: "35vh"}}>You haven't registered in any courses, Please Enroll under Add Courses</h4>
         } else {
           return (this.state.userCourse.map(course => (<div className="col s2"><CourseBlock courseID={course} key={this.state.key}/></div>)))
         }
