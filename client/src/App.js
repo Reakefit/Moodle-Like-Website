@@ -11,6 +11,7 @@ import AdminCourses from './components/admin/AdminCourses';
 import EditCourse from './components/admin/EditCourse';
 import AdminNewCourse from './components/admin/AdminNewCourse';
 import AdminStudents from './components/admin/AdminStudents';
+import Channel from './components/channels/Channel';
 
 const App = () => {
   return (
@@ -28,6 +29,7 @@ const App = () => {
           <Route path='/EditCourse' element={<EditCourse />} />
           <Route exact path='/AdminNewCourse' element={<AdminNewCourse />} />
           <Route exact path='/AdminStudents' element={<AdminStudents />} />
+          <Route path="/channel" element={<Channel />}/>
         </Routes>
       </BrowserRouter> 
     </div>

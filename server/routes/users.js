@@ -12,8 +12,6 @@ import { auth } from '../middleware/auth.js';
 import { secret } from '../config/keys.js';
 import { UserCourses } from '../models/UserCourse.js';
 
-// GET request to get user imformation
-// ROUTE: api/users/ - we use cookies for this
 router.get('/', auth, (req, res) => {
     const userId = req.cookies["userId"] || req.body.userId;
 

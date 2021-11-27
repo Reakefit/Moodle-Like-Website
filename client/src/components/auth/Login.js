@@ -45,7 +45,6 @@ class Login extends Component {
     axios
       .post("http://localhost:5000/api/users/login", newUser)
       .then((res) => {
-        console.log(res.data);
         Cookie.set("token", res.data.token);
         Cookie.set("userId", res.data.userId);
         Cookie.set("name", res.data.name);
@@ -63,7 +62,6 @@ class Login extends Component {
         this.setState({
           errors: err.response.data
         })
-        console.log(err.response.data)
         Cookie.remove("token");
         Cookie.remove("userId");
       });

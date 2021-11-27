@@ -53,8 +53,6 @@ router.post('/add', (req, res) => {
     .catch((err) => res.status(400).json("Error: " + err));
 });
 
-export default router;
-
 async function addCourse(
     courseID,
     courseName,
@@ -143,3 +141,5 @@ router.get("/display", auth, (req, res) => {
     })
     .catch((err) => res.status(400).json("Error: " + err));
 });
+
+export default router;
