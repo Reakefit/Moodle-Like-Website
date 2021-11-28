@@ -67,7 +67,7 @@ class CourseBlock extends Component {
         </div>
         <div className="card-content">
           <span className="card-title activator grey-text text-darken-4">{this.state.courseName}<i className="material-icons right">more_vert</i></span>
-          <a href={"http://localhost:3000/channel?name=" + this.state.courseID}>Enter</a>
+          <a href={"https://cocky-goldstine-c81e02.netlify.app/channel?name=" + this.state.courseID}>Enter</a>
         </div>
         <div className="card-reveal">
           <span className="card-title grey-text text-darken-6">{this.state.courseID}<i className="material-icons right">close</i></span>
