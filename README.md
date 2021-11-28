@@ -25,9 +25,9 @@ Please read this completely before heading to the website.
 The website is hosted on https://blackboard-engage.netlify.app/ The servers are freebies and really slow so please be patient while navigating the site.  
 The backend is hosted on Heroku and API calls can be made to https://black-board-engage.herokuapp.com/ I'll attach a link with all the api calls below.  
 All data is saved to my MongoDB cloud servers and schema for the same can be found in server/schemas.  
-So while stress testing or trying to break the application please do this instead of using the website:
+So while stress testing or trying to break the application please do this instead of using the website so it does not affect other users:
 1. Clone the master branch repo onto a local folder with git clone.  
-2. Navigate to both the server side and client side and do "npm install" to install and required dependancies.  
+2. Navigate to both the server side and client side and do "npm install" to install the required dependancies.  
 3. Once installation is done, create an mongo atlas cluster on https://www.mongodb.com/cloud/atlas.  
 4. And under config/keys.js change the URI to that of your newly created Mongo Atlas Cluster URI.  
 5. Once done, run "npm start" in both the client and server directories and the backend and frontend should be running simultaneously.  
