@@ -33,7 +33,7 @@ So while stress testing or trying to break the application please do this instea
 5. Once done, run "npm start" in both the client and server directories and the backend and frontend should be running simultaneously.  
 6. Feel free to experiment with anything after that, and make custom API calls on Postman too. Have fun :)  
 
-In case of any issues or major bugs or any suggestions or improvements, please create an issue in GitHub or mail to me at mouni221100@gmail.com, I really enjoy working on them and would love to find ways to work on all suggestions. Thanks for reading so far and hope you like the application.
+In case of any issues or major bugs or any suggestions, please create an issue in GitHub or mail to me at mouni221100@gmail.com, I really enjoy working on them and would love to find ways to work on all the suggestions. Thanks for reading so far and hope you like the application.
 
 
 
