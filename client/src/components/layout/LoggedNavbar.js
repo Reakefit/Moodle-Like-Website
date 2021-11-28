@@ -15,7 +15,7 @@ class LoggedNavbar extends Component {
             redirect: null,
         }
     }
-    
+
     async componentDidMount() {
         if (!Cookie.get("token")) {
             window.location = '/';
@@ -25,38 +25,38 @@ class LoggedNavbar extends Component {
 
         const response = await fetch(
             "http://localhost:5000/api/users/auth?token=" +
-                Cookie.get("token") +
-                "&userId=" +
-                Cookie.get("userId")
-            );
-            this.setState({
-                name: Cookie.get("name"),
+            Cookie.get("token") +
+            "&userId=" +
+            Cookie.get("userId")
+        );
+        this.setState({
+            name: Cookie.get("name"),
         });
     }
 
     logout(e) {
         e.preventDefault();
         axios
-        .get(
-            "http://localhost:5000/api/users/logout?token=" +
-            Cookie.get("token") +
-            "&userId=" +
-            Cookie.get("userId")
-        )
-        .then((res) => {
-            Cookie.remove("token");
-            Cookie.remove("userId");
-            this.setState({
-              redirect: "/",
+            .get(
+                "http://localhost:5000/api/users/logout?token=" +
+                Cookie.get("token") +
+                "&userId=" +
+                Cookie.get("userId")
+            )
+            .then((res) => {
+                Cookie.remove("token");
+                Cookie.remove("userId");
+                this.setState({
+                    redirect: "/",
+                });
+            })
+            .catch((err) => {
+                Cookie.remove("token");
+                Cookie.remove("userId");
+                console.log("didnt log out");
             });
-        })
-        .catch((err) => {
-            Cookie.remove("token");
-            Cookie.remove("userId");
-            console.log("didnt log out");
-        });
     }
-    
+
 
     render() {
         if (this.state.redirect) {
@@ -64,61 +64,61 @@ class LoggedNavbar extends Component {
         }
         return (
             <div className='navbar-fixed'>
-            <nav>
-                <div className='nav-wrapper'>
-                    <Link className="brand-logo" to='/Home'>
-                        <i className='material-icons' style={{fontSize: 30}}>school</i>
-                        BLACKBOARD
-                    </Link>
-                    <a href='/Home' data-target="mobile-demo" className="sidenav-trigger"><i className="material-icons">menu</i></a>
-                    <ul className="right hide-on-med-and-down">
-                        <li>
-                            <Link id='MyCourses' to='/UserCourses'>My Courses</Link>
-                        </li>
-                        <li>
-                            <Link id='AddCourse' to='/AddCourses'>Add Courses</Link>
-                        </li>
-                        <li>
-                            <button
-                                style={{
-                                  marginTop: "0.4rem",
-                                  marginRight: "1rem",
-                                  widthMax: "150px",
-                                  borderRadius: "3px",
-                                  letterSpacing: "1.5px",
-                                }}
-                                onClick={this.logout}
-                                className="btn btn-large waves-effect waves-light hoverable blue accent-3 right"
+                <nav>
+                    <div className='nav-wrapper'>
+                        <Link className="brand-logo" to='/Home'>
+                            <i className='material-icons' style={{ fontSize: 30 }}>school</i>
+                            BLACKBOARD
+                        </Link>
+                        <a href='/Home' data-target="mobile-demo" className="sidenav-trigger"><i className="material-icons">menu</i></a>
+                        <ul className="right hide-on-med-and-down">
+                            <li>
+                                <Link id='MyCourses' to='/UserCourses'>My Courses</Link>
+                            </li>
+                            <li>
+                                <Link id='AddCourse' to='/AddCourses'>Add Courses</Link>
+                            </li>
+                            <li>
+                                <button
+                                    style={{
+                                        marginTop: "0.4rem",
+                                        marginRight: "1rem",
+                                        widthMax: "150px",
+                                        borderRadius: "3px",
+                                        letterSpacing: "1.5px",
+                                    }}
+                                    onClick={this.logout}
+                                    className="btn btn-large waves-effect waves-light hoverable blue accent-3 right"
                                 >
-                                Logout
-                            </button>
-                        </li>
-                    </ul>
-                </div>
-            </nav>
-            <ul className="sidenav" id="mobile-demo">
-                <li>
-                    <Link id='MyCourses' to='/UserCourses'>My Courses</Link>
-                </li>
-                <li>
-                    <Link id='AddCourse' to='/AddCourses'>Add Courses</Link>
-                </li>
-                <li>
-                    <button
-                        style={{
-                          marginTop: "0.4rem",
-                          marginRight: "1rem",
-                          widthMax: "150px",
-                          borderRadius: "3px",
-                          letterSpacing: "1.5px",
-                        }}
-                        onClick={this.logout}
-                        className="btn btn-large waves-effect waves-light hoverable blue accent-3 right"
+                                    Logout
+                                </button>
+                            </li>
+                        </ul>
+                    </div>
+                </nav>
+                <ul className="sidenav" id="mobile-demo">
+                    <li>
+                        <Link id='MyCourses' to='/UserCourses'>My Courses</Link>
+                    </li>
+                    <li>
+                        <Link id='AddCourse' to='/AddCourses'>Add Courses</Link>
+                    </li>
+                    <li>
+                        <button
+                            style={{
+                                marginTop: "0.4rem",
+                                marginRight: "1rem",
+                                widthMax: "150px",
+                                borderRadius: "3px",
+                                letterSpacing: "1.5px",
+                            }}
+                            onClick={this.logout}
+                            className="btn btn-large waves-effect waves-light hoverable blue accent-3 right"
                         >
-                        Logout
-                    </button>
-                </li>
-            </ul>
+                            Logout
+                        </button>
+                    </li>
+                </ul>
             </div>
         )
     }

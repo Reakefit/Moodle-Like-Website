@@ -18,62 +18,62 @@ class CourseBlock extends Component {
     }
   }
 
-  componentDidMount () {
+  componentDidMount() {
     this.fetchCourseDetails();
   }
 
   fetchCourseDetails() {
     axios.get(
-      "http://localhost:5000/api/courses/display?token="+
+      "http://localhost:5000/api/courses/display?token=" +
       Cookie.get("token") +
       "&userId=" +
       Cookie.get("userId") +
       "&value=" +
       this.props.courseID
     )
-    .then(res => {
-      console.log(res.data[0])
-      this.setState({
-        _id: res.data[0]._id,
-        courseID: res.data[0].courseID,
-        image: res.data[0].image,
-        description: res.data[0].description,
-        courseName: res.data[0].courseName,
-        Url: res.data[0].Url
+      .then(res => {
+        console.log(res.data[0])
+        this.setState({
+          _id: res.data[0]._id,
+          courseID: res.data[0].courseID,
+          image: res.data[0].image,
+          description: res.data[0].description,
+          courseName: res.data[0].courseName,
+          Url: res.data[0].Url
+        })
       })
-    })
-    .catch(err => console.log(err.response));
+      .catch(err => console.log(err.response));
   }
 
   unenroll(e) {
     e.preventDefault();
     axios.post(
-    "http://localhost:5000/api/users/removeCourse?token="+
-    Cookie.get("token") +
-    "&userId=" +
-    Cookie.get("userId") +
-    "&courseId=" +
-    this.state._id
+      "http://localhost:5000/api/users/removeCourse?token=" +
+      Cookie.get("token") +
+      "&userId=" +
+      Cookie.get("userId") +
+      "&courseId=" +
+      this.state._id
     )
-    .then(window.location.reload())
-    .catch(err => console.log(err.response));
+      .then(window.location.reload())
+      .catch(err => console.log(err.response));
   }
 
   render() {
     return (
       <div className="card">
         <div className="card-image waves-effect waves-block waves-light">
-          <img className="activator" src={this.state.image} alt="Admin is yet to add a image for this course"/>
+          <img className="activator" src={this.state.image} alt="Admin is yet to add a image for this course" />
         </div>
         <div className="card-content">
           <span className="card-title activator grey-text text-darken-4">{this.state.courseName}<i className="material-icons right">more_vert</i></span>
-          <a href={"http://localhost:3000/channel?name="+this.state.courseID}>Enter</a>
+          <a href={"http://localhost:3000/channel?name=" + this.state.courseID}>Enter</a>
         </div>
         <div className="card-reveal">
           <span className="card-title grey-text text-darken-6">{this.state.courseID}<i className="material-icons right">close</i></span>
           <p>{this.state.description}</p>
           <button className="btn btn-small waves-effect waves-light hoverable red accent-3 bottom"
-          onClick={this.unenroll}>Unenroll</button>
+            onClick={this.unenroll}>Unenroll</button>
         </div>
       </div>
     )

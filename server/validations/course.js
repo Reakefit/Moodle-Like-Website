@@ -12,13 +12,13 @@ export const courseValidate = (data) => {
 
 
     if (Validator.isEmpty(data.courseID)) {
-      errors.courseID = "Course ID field is required";
-    } else if (!Validator.isLength(data.courseID, {min:6, max:6})) {
-      errors.courseIDInvalid = "course ID must be 6 digits";
+        errors.courseID = "Course ID field is required";
+    } else if (!Validator.isLength(data.courseID, { min: 6, max: 6 })) {
+        errors.courseIDInvalid = "course ID must be 6 digits";
     }
 
     if (Validator.isEmpty(data.courseName)) {
-      errors.courseName = "Course Name is required";
+        errors.courseName = "Course Name is required";
     }
 
     if (Validator.isEmpty(data.professorName)) {

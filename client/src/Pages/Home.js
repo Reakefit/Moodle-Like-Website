@@ -5,8 +5,8 @@ import Landing from '../components/Landing'
 const Home = () => {
     return (
         <>
-        <Navbar />
-        <Landing />
+            <Navbar />
+            <Landing />
         </>
     )
 }

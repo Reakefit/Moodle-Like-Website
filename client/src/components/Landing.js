@@ -2,9 +2,9 @@ import { Link } from 'react-router-dom';
 import image from './images/511752.jpg';
 
 const Landing = () => {
-    return (
-        <>
-        <div style={{ height: "75vh" }} className="container valign-wrapper">
+  return (
+    <>
+      <div style={{ height: "75vh" }} className="container valign-wrapper">
         <div className="row">
           <div className="col s12 center-align">
             <img src={image} alt="Welcome" style={{
@@ -49,7 +49,7 @@ const Landing = () => {
           </div>
         </div>
       </div></>
-      );
+  );
 }
 
 export default Landing;

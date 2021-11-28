@@ -18,7 +18,7 @@ export const auth = (req, res, next) => {
                 .then((session) => {
                     console.log(session.token)
 
-                    if(session && session.token === token)
+                    if (session && session.token === token)
                         next();
                     else
                         res.status(401).json({
@@ -31,7 +31,7 @@ export const auth = (req, res, next) => {
 
         }
     }
-    
+
     catch (e) {
         res.status(401).json({
             error: new Error('Invalid request!')

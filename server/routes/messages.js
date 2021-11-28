@@ -5,7 +5,7 @@ import Filter from 'bad-words';
 import { Channel } from '../models/Channel.js';
 import { Message } from '../models/Message.js';
 
-router.get('/', function(req, res) {
+router.get('/', function (req, res) {
   let limit = parseInt(req.query.limit || '100', 10);
   if (limit < 1 || limit > 1000) {
     res.status(400).json({ error: true, message: 'Invalid limit.' });
@@ -19,9 +19,10 @@ router.get('/', function(req, res) {
   }
 
   Channel
-    .findOne({ name : channel_name })
+    .findOne({ name: channel_name })
     .select('-messages -message_count')
-    .exec((err, channel) => { if (err) {
+    .exec((err, channel) => {
+      if (err) {
         res.status(500).json({ error: true, message: err.message });
         return;
       }
@@ -34,7 +35,7 @@ router.get('/', function(req, res) {
 
       if ('after' in req.query) {
         let cutoff_date = new Date(req.query.after);
-        query = Message.find({ channel: channel._id, created_at: { "$gte" : cutoff_date } });
+        query = Message.find({ channel: channel._id, created_at: { "$gte": cutoff_date } });
       }
 
       query = query.sort('-created_at');
@@ -66,7 +67,7 @@ router.post('/', function (req, res) {
   }
 
   Channel
-    .findOne({ name : channel_name })
+    .findOne({ name: channel_name })
     .exec((err, channel) => {
       if (err) {
         res.status(500).json({ error: true, message: err.message });
@@ -82,7 +83,7 @@ router.post('/', function (req, res) {
         sender: message_sender,
         content: message_content,
         channel: channel._id,
-        created_at: Date.now() 
+        created_at: Date.now()
       });
 
       message.save((err, message) => {
@@ -100,7 +101,7 @@ router.post('/', function (req, res) {
             return;
           }
 
-          res.json({ success : true, data: message }); 
+          res.json({ success: true, data: message });
         });
       });
     });

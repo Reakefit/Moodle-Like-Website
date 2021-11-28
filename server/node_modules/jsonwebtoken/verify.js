@@ -1,10 +1,10 @@
 var JsonWebTokenError = require('./lib/JsonWebTokenError');
-var NotBeforeError    = require('./lib/NotBeforeError');
+var NotBeforeError = require('./lib/NotBeforeError');
 var TokenExpiredError = require('./lib/TokenExpiredError');
-var decode            = require('./decode');
-var timespan          = require('./lib/timespan');
-var PS_SUPPORTED      = require('./lib/psSupported');
-var jws               = require('jws');
+var decode = require('./decode');
+var timespan = require('./lib/timespan');
+var PS_SUPPORTED = require('./lib/psSupported');
+var jws = require('jws');
 
 var PUB_KEY_ALGS = ['RS256', 'RS384', 'RS512', 'ES256', 'ES384', 'ES512'];
 var RSA_KEY_ALGS = ['RS256', 'RS384', 'RS512'];
@@ -33,7 +33,7 @@ module.exports = function (jwtString, secretOrPublicKey, options, callback) {
   if (callback) {
     done = callback;
   } else {
-    done = function(err, data) {
+    done = function (err, data) {
       if (err) throw err;
       return data;
     };
@@ -49,7 +49,7 @@ module.exports = function (jwtString, secretOrPublicKey, options, callback) {
 
   var clockTimestamp = options.clockTimestamp || Math.floor(Date.now() / 1000);
 
-  if (!jwtString){
+  if (!jwtString) {
     return done(new JsonWebTokenError('jwt must be provided'));
   }
 
@@ -59,7 +59,7 @@ module.exports = function (jwtString, secretOrPublicKey, options, callback) {
 
   var parts = jwtString.split('.');
 
-  if (parts.length !== 3){
+  if (parts.length !== 3) {
     return done(new JsonWebTokenError('jwt malformed'));
   }
 
@@ -67,7 +67,7 @@ module.exports = function (jwtString, secretOrPublicKey, options, callback) {
 
   try {
     decodedToken = decode(jwtString, { complete: true });
-  } catch(err) {
+  } catch (err) {
     return done(err);
   }
 
@@ -78,27 +78,27 @@ module.exports = function (jwtString, secretOrPublicKey, options, callback) {
   var header = decodedToken.header;
   var getSecret;
 
-  if(typeof secretOrPublicKey === 'function') {
-    if(!callback) {
+  if (typeof secretOrPublicKey === 'function') {
+    if (!callback) {
       return done(new JsonWebTokenError('verify must be called asynchronous if secret or public key is provided as a callback'));
     }
 
     getSecret = secretOrPublicKey;
   }
   else {
-    getSecret = function(header, secretCallback) {
+    getSecret = function (header, secretCallback) {
       return secretCallback(null, secretOrPublicKey);
     };
   }
 
-  return getSecret(header, function(err, secretOrPublicKey) {
-    if(err) {
+  return getSecret(header, function (err, secretOrPublicKey) {
+    if (err) {
       return done(new JsonWebTokenError('error in secret or public key callback: ' + err.message));
     }
 
     var hasSignature = parts[2].trim() !== '';
 
-    if (!hasSignature && secretOrPublicKey){
+    if (!hasSignature && secretOrPublicKey) {
       return done(new JsonWebTokenError('jwt signature is required'));
     }
 
@@ -170,8 +170,8 @@ module.exports = function (jwtString, secretOrPublicKey, options, callback) {
 
     if (options.issuer) {
       var invalid_issuer =
-              (typeof options.issuer === 'string' && payload.iss !== options.issuer) ||
-              (Array.isArray(options.issuer) && options.issuer.indexOf(payload.iss) === -1);
+        (typeof options.issuer === 'string' && payload.iss !== options.issuer) ||
+        (Array.isArray(options.issuer) && options.issuer.indexOf(payload.iss) === -1);
 
       if (invalid_issuer) {
         return done(new JsonWebTokenError('jwt issuer invalid. expected: ' + options.issuer));

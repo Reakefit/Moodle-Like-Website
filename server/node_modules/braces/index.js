@@ -158,7 +158,7 @@ braces.create = (input, options = {}) => {
     return [input];
   }
 
- return options.expand !== true
+  return options.expand !== true
     ? braces.compile(input, options)
     : braces.expand(input, options);
 };

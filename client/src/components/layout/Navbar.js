@@ -11,8 +11,8 @@ const Navbar = () => {
                             fontFamily: 'monospace'
                         }}
                         className='col s5 brand-logo center black-text'>
-                            <i className='material-icons' style={{fontSize: 30}}>school</i>
-                            BLACKBOARD
+                        <i className='material-icons' style={{ fontSize: 30 }}>school</i>
+                        BLACKBOARD
                     </Link>
                 </div>
             </nav>

@@ -5,7 +5,7 @@ import { auth } from '../middleware/auth.js';
 import { Channel } from '../models/Channel.js';
 import { Message } from '../models/Message.js';
 
-router.get('/', function(req, res) {
+router.get('/', function (req, res) {
   let limit = parseInt(req.query.limit || '100', 10);
   if (limit < 1 || limit > 1000) {
     res.status(400).json({ error: true, message: 'Invalid limit.' });
@@ -26,15 +26,15 @@ router.get('/', function(req, res) {
     });
 });
 
-router.get('/:name', function(req, res) {
-  let name = req.params.name; 
+router.get('/:name', function (req, res) {
+  let name = req.params.name;
   if (name == null) {
     res.status(400).json({ error: true, message: 'Must specify a channel name.' });
     return;
   }
 
   Channel
-    .findOne({ name : name })
+    .findOne({ name: name })
     .select('-messages')
     .exec((err, channel) => {
       if (err) {
@@ -57,7 +57,7 @@ router.post('/', function (req, res) {
   }
 
   Channel
-    .count({ name : name })
+    .count({ name: name })
     .exec((err, count) => {
       if (err) {
         res.status(500).json({ error: true, message: err.message });
