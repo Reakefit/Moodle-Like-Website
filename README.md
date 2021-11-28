@@ -1,7 +1,7 @@
 # BlackBoard
 
-Welcome to BlackBoard, A platform for students to manage their courses and enter chatrooms to have conversation with other course mates enrolled in the course. Admins will be able to manage courses which the students can enroll in and manage the students to ensure that the chatrooms are free from any disruptions.
-To jump directly on how to use the platform skip to <a href="https://github.com/Reakefit/ProjectCourse/master?readme#how-to-run-the-application">How-To-Run-the-Application</a>
+Welcome to BlackBoard, A platform for students to manage their courses and enter chatrooms to have conversation with other course mates enrolled in the course. Admins will be able to manage courses which the students can enroll in and manage the students to ensure that the chatrooms are free from any disruptions.  
+To jump directly on how to use the platform skip to How To Run the Application.
 
 # Features:
 ## Students:
