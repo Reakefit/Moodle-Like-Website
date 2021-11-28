@@ -28,7 +28,7 @@ class AdminCourses extends Component {
 
   async updateTable() {
     const response = await fetch(
-      "http://localhost:5000/api/courses?page=" +
+      "/api/courses?page=" +
       this.state.page +
       "&token=" +
       Cookie.get("token") +
