@@ -22,7 +22,7 @@ class AdminStudents extends Component {
 
   async fetchStudents() {
     const response = await fetch(
-      "/api/users/allUsers"
+      "https://black-board-engage.herokuapp.com/api/users/allUsers"
     );
     const res = await response.json()
     this.setState({
@@ -33,7 +33,7 @@ class AdminStudents extends Component {
   }
 
   deleteStudent(_id) {
-    axios.post("/api/users/delete", {_id : _id})
+    axios.post("https://black-board-engage.herokuapp.com/api/users/delete", {_id : _id})
       .then(window.location.reload())
   }
 
@@ -51,7 +51,7 @@ class AdminStudents extends Component {
     }
 
     axios.get(
-      "/api/users/search?value=" + e.target.value
+      "https://black-board-engage.herokuapp.com/api/users/search?value=" + e.target.value
     )
       .then((res) => this.setState({ data: res.data }))
       .catch((err) => {

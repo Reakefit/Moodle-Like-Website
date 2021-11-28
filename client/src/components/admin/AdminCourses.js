@@ -28,7 +28,7 @@ class AdminCourses extends Component {
 
   async updateTable() {
     const response = await fetch(
-      "/api/courses?page=" +
+      "https://black-board-engage.herokuapp.com/api/courses?page=" +
       this.state.page +
       "&token=" +
       Cookie.get("token") +
@@ -65,7 +65,7 @@ class AdminCourses extends Component {
 
     axios
       .get(
-        "/api/courses/search?value=" +
+        "https://black-board-engage.herokuapp.com/api/courses/search?value=" +
         e.target.value +
         "&token=" +
         Cookie.get("token") +

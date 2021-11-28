@@ -28,7 +28,7 @@ class MyCourses extends Component {
 
     fetchCourses() {
         axios.get(
-            "/api/users/userCourse?token=" +
+            "https://black-board-engage.herokuapp.com/api/users/userCourse?token=" +
             Cookie.get("token") +
             "&userId=" +
             Cookie.get("userId")

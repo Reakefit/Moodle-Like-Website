@@ -28,7 +28,7 @@ class AdminNewCourse extends Component {
     }
 
     createCourse() {
-        axios.post("/api/courses/add", this.state)
+        axios.post("https://black-board-engage.herokuapp.com/api/courses/add", this.state)
             .then(res => {
                 console.log("updated")
                 window.location.href = "/AdminCourses"

@@ -58,7 +58,7 @@ class Register extends Component {
     };
 
     axios
-      .post("/api/users/register", newUser)
+      .post("https://black-board-engage.herokuapp.com/api/users/register", newUser)
       .then((res) => {
         console.log("Success");
         window.location = "/";

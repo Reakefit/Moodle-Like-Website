@@ -29,7 +29,7 @@ class EditCourse extends Component {
 
         axios
             .get(
-                "/api/courses/search?value=" +
+                "https://black-board-engage.herokuapp.com/api/courses/search?value=" +
                 value +
                 "&token=" +
                 Cookie.get("token") +
@@ -58,7 +58,7 @@ class EditCourse extends Component {
 
     updateCourse() {
         axios.post(
-            "/api/courses/update",
+            "https://black-board-engage.herokuapp.com/api/courses/update",
             this.state
         )
             .then(res => {

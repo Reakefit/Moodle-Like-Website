@@ -24,7 +24,7 @@ class AdminNavbar extends Component {
         console.log(Cookie.get("userId"))
 
         const response = await fetch(
-            "/api/users/auth?token=" +
+            "https://black-board-engage.herokuapp.com/api/users/auth?token=" +
             Cookie.get("token") +
             "&userId=" +
             Cookie.get("userId")
@@ -38,7 +38,7 @@ class AdminNavbar extends Component {
         e.preventDefault();
         axios
             .get(
-                "/api/users/logout?token=" +
+                "https://black-board-engage.herokuapp.com/api/users/logout?token=" +
                 Cookie.get("token") +
                 "&userId=" +
                 Cookie.get("userId")

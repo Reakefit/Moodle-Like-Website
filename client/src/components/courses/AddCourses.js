@@ -28,7 +28,7 @@ class AddCourses extends Component {
 
   async updateTable() {
     const response = await fetch(
-      "/api/courses?page=" +
+      "https://black-board-engage.herokuapp.com/api/courses?page=" +
       this.state.page +
       "&token=" +
       Cookie.get("token") +
@@ -47,7 +47,7 @@ class AddCourses extends Component {
     console.log("adding")
     axios
       .post(
-        "/api/users/addCourse?token=" +
+        "https://black-board-engage.herokuapp.com/api/users/addCourse?token=" +
         Cookie.get("token") +
         "&userId=" +
         Cookie.get("userId"),
@@ -60,7 +60,7 @@ class AddCourses extends Component {
   }
 
   onSearch(e) {
-    console.log("/api/courses/search?value=" +
+    console.log("https://black-board-engage.herokuapp.com/api/courses/search?value=" +
       e.target.value +
       "&token=" +
       Cookie.get("token") +
@@ -81,7 +81,7 @@ class AddCourses extends Component {
 
     axios
       .get(
-        "/api/courses/search?value=" +
+        "https://black-board-engage.herokuapp.com/api/courses/search?value=" +
         e.target.value +
         "&token=" +
         Cookie.get("token") +
