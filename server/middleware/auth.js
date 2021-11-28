@@ -16,7 +16,6 @@ export const auth = (req, res, next) => {
 
             UserSession.findOne({ userId: userId })
                 .then((session) => {
-                    console.log(session.token)
 
                     if (session && session.token === token)
                         next();

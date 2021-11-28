@@ -2,7 +2,6 @@ import Validator from 'validator';
 import isEmpty from 'is-empty';
 
 export const courseValidate = (data) => {
-    console.log(data)
     let errors = {};
     data.courseID = !isEmpty(data.courseID) ? data.courseID : "";
     data.courseName = !isEmpty(data.courseName) ? data.courseName : "";

@@ -85,7 +85,6 @@ router.post('/delete', (req, res) => {
 });
 
 router.post('/register', (req, res) => {
-  console.log(req.body);
   const { errors, isValid } = userValidate(req.body);
 
   if (!isValid) {
@@ -192,7 +191,6 @@ router.get('/logout', auth, (req, res) => {
   UserSession.findOneAndDelete({ userId: userId })
     .then(() => {
       res.status(200).json("Done!");
-      console.log(userId);
     })
     .catch((err) => {
       res.status(400).json("Error: " + err);
@@ -209,7 +207,6 @@ router.get("/userInfo", auth, (req, res) => {
 });
 
 router.get("/auth", auth, (req, res) => {
-  console.log(req);
   res.status(200).json("True");
 });
 
@@ -258,7 +255,6 @@ router.get("/userCourse", auth, (req, res) => {
 });
 
 router.post("/addCourse", auth, (req, res) => {
-  console.log(req.body.userId || req.query.userId);
 
   const userId = req.cookies["userId"] || req.query.userId;
   const courseId = req.body.courseId;
@@ -282,7 +278,6 @@ router.post("/removeCourse", auth, (req, res) => {
   if (!courseId) {
     res.json("Not enrolled in the course");
   }
-  console.log("Deleting: " + courseId);
   UserCourses.updateOne(
     { userId: userId.trim() },
     { userId: userId, $pull: { courses: courseId } },
@@ -295,7 +290,6 @@ router.post("/removeCourse", auth, (req, res) => {
 });
 
 router.post("/setUserCourses", auth, (req, res) => {
-  console.log(req.body.userId || req.query.userId);
   UserCourses.replaceOne(
     { userId: req.body.userId },
     { userId: req.body.userId, courses: req.body.courses },
