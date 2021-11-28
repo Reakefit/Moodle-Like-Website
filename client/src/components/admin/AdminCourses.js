@@ -65,7 +65,7 @@ class AdminCourses extends Component {
 
     axios
       .get(
-        "http://localhost:5000/api/courses/search?value=" +
+        "/api/courses/search?value=" +
         e.target.value +
         "&token=" +
         Cookie.get("token") +

@@ -28,7 +28,7 @@ class MyCourses extends Component {
 
     fetchCourses() {
         axios.get(
-            "http://localhost:5000/api/users/userCourse?token=" +
+            "/api/users/userCourse?token=" +
             Cookie.get("token") +
             "&userId=" +
             Cookie.get("userId")

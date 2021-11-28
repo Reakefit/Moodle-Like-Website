@@ -43,7 +43,7 @@ class Login extends Component {
     };
     console.log(newUser);
     axios
-      .post("http://localhost:5000/api/users/login", newUser)
+      .post("/api/users/login", newUser)
       .then((res) => {
         Cookie.set("token", res.data.token);
         Cookie.set("userId", res.data.userId);

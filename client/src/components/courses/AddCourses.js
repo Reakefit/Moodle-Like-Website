@@ -28,7 +28,7 @@ class AddCourses extends Component {
 
   async updateTable() {
     const response = await fetch(
-      "http://localhost:5000/api/courses?page=" +
+      "/api/courses?page=" +
       this.state.page +
       "&token=" +
       Cookie.get("token") +
@@ -47,7 +47,7 @@ class AddCourses extends Component {
     console.log("adding")
     axios
       .post(
-        "http://localhost:5000/api/users/addCourse?token=" +
+        "/api/users/addCourse?token=" +
         Cookie.get("token") +
         "&userId=" +
         Cookie.get("userId"),
@@ -60,7 +60,7 @@ class AddCourses extends Component {
   }
 
   onSearch(e) {
-    console.log("http://localhost:5000/api/courses/search?value=" +
+    console.log("/api/courses/search?value=" +
       e.target.value +
       "&token=" +
       Cookie.get("token") +
@@ -81,7 +81,7 @@ class AddCourses extends Component {
 
     axios
       .get(
-        "http://localhost:5000/api/courses/search?value=" +
+        "/api/courses/search?value=" +
         e.target.value +
         "&token=" +
         Cookie.get("token") +

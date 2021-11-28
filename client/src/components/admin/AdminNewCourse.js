@@ -28,7 +28,7 @@ class AdminNewCourse extends Component {
     }
 
     createCourse() {
-        axios.post("http://localhost:5000/api/courses/add", this.state)
+        axios.post("/api/courses/add", this.state)
             .then(res => {
                 console.log("updated")
                 window.location.href = "/AdminCourses"

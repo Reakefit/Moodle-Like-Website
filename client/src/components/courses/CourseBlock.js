@@ -24,7 +24,7 @@ class CourseBlock extends Component {
 
   fetchCourseDetails() {
     axios.get(
-      "http://localhost:5000/api/courses/display?token=" +
+      "/api/courses/display?token=" +
       Cookie.get("token") +
       "&userId=" +
       Cookie.get("userId") +
@@ -48,7 +48,7 @@ class CourseBlock extends Component {
   unenroll(e) {
     e.preventDefault();
     axios.post(
-      "http://localhost:5000/api/users/removeCourse?token=" +
+      "/api/users/removeCourse?token=" +
       Cookie.get("token") +
       "&userId=" +
       Cookie.get("userId") +

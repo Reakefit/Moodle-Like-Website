@@ -24,7 +24,7 @@ class AdminNavbar extends Component {
         console.log(Cookie.get("userId"))
 
         const response = await fetch(
-            "http://localhost:5000/api/users/auth?token=" +
+            "/api/users/auth?token=" +
             Cookie.get("token") +
             "&userId=" +
             Cookie.get("userId")
@@ -38,7 +38,7 @@ class AdminNavbar extends Component {
         e.preventDefault();
         axios
             .get(
-                "http://localhost:5000/api/users/logout?token=" +
+                "/api/users/logout?token=" +
                 Cookie.get("token") +
                 "&userId=" +
                 Cookie.get("userId")

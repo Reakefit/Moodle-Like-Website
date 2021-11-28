@@ -58,7 +58,7 @@ class Register extends Component {
     };
 
     axios
-      .post("http://localhost:5000/api/users/register", newUser)
+      .post("/api/users/register", newUser)
       .then((res) => {
         console.log("Success");
         window.location = "/";

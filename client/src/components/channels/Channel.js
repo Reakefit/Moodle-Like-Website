@@ -38,13 +38,13 @@ class Channel extends Component {
       channel: value
     })
     function fetch_messages(self) {
-      axios.get(`http://localhost:5000/api/messages?channel=${value}&limit=${MESSAGE_LIMIT}`).then(res => {
+      axios.get(`/api/messages?channel=${value}&limit=${MESSAGE_LIMIT}`).then(res => {
         let messages = res.data.data;
         let heartbeat_id = setInterval(self.doHeartbeat, HEARTBEAT_INTERVAL);
         self.setState({ messages: messages, heartbeat: heartbeat_id, heartbeat_timestamp: new Date() });
       }).catch(err => {
         if (err.response.status === 404) {
-          axios.post("http://localhost:5000/api/channels", {
+          axios.post("/api/channels", {
             name: value
           }).then(res => {
             fetch_messages(self);
@@ -63,7 +63,7 @@ class Channel extends Component {
 
     this.setState({ heartbeat_lock: true });
 
-    axios.get(`http://localhost:5000/api/messages?channel=${this.state.channel}&after=${this.state.heartbeat_timestamp.toISOString()}`).then(res => {
+    axios.get(`/api/messages?channel=${this.state.channel}&after=${this.state.heartbeat_timestamp.toISOString()}`).then(res => {
       let new_messages = res.data.data;
       let messages = new_messages.length > 0 ? new_messages.concat(this.state.messages).slice(0, MESSAGE_LIMIT) : this.state.messages;
       this.setState({ messages: messages, heartbeat_timestamp: new Date(), heartbeat_lock: false });
@@ -82,7 +82,7 @@ class Channel extends Component {
       return;
     }
 
-    axios.post("http://localhost:5000/api/messages", {
+    axios.post("/api/messages", {
       sender: this.state.name,
       content: message,
       channel: this.state.channel

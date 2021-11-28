@@ -22,7 +22,7 @@ class AdminStudents extends Component {
 
   async fetchStudents() {
     const response = await fetch(
-      "http://localhost:5000/api/users/allUsers"
+      "/api/users/allUsers"
     );
     const res = await response.json()
     this.setState({
@@ -32,8 +32,8 @@ class AdminStudents extends Component {
     console.log(this.state.data)
   }
 
-  deleteStudent(id) {
-    axios.post("http://localhost:5000/api/users/delete", id)
+  deleteStudent(_id) {
+    axios.post("/api/users/delete", {_id : _id})
       .then(window.location.reload())
   }
 
@@ -51,7 +51,7 @@ class AdminStudents extends Component {
     }
 
     axios.get(
-      "http://localhost:5000/api/users/search?value=" + e.target.value
+      "/api/users/search?value=" + e.target.value
     )
       .then((res) => this.setState({ data: res.data }))
       .catch((err) => {
@@ -95,6 +95,7 @@ class AdminStudents extends Component {
               <tr>
                 <th>User ID</th>
                 <th>User Name</th>
+                <th>Delete</th>
               </tr>
             </thead>
             <tbody>
@@ -105,6 +106,17 @@ class AdminStudents extends Component {
                   >
                     <td>{item.userId}</td>
                     <td>{item.name}</td>
+                    <td>
+                      <div className="button">
+                        <button
+                          id="work"
+                          className="btn btn-small waves-effect waves-light hoverable red accent-3"
+                          onClick={() => this.deleteStudent(item._id)}
+                        >
+                          Delete
+                        </button>
+                      </div>
+                    </td>
                   </tr>
                 );
               })}

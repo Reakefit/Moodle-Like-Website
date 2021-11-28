@@ -29,7 +29,7 @@ class EditCourse extends Component {
 
         axios
             .get(
-                "http://localhost:5000/api/courses/search?value=" +
+                "/api/courses/search?value=" +
                 value +
                 "&token=" +
                 Cookie.get("token") +
@@ -58,7 +58,7 @@ class EditCourse extends Component {
 
     updateCourse() {
         axios.post(
-            "http://localhost:5000/api/courses/update",
+            "/api/courses/update",
             this.state
         )
             .then(res => {
