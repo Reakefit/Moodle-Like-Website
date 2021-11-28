@@ -23,7 +23,7 @@ Delete students in case any of them are dirupting the chat forum.
 # How to Run the Application:
 Please read this completely before heading to the website.  
 The website is hosted on https://blackboard-engage.netlify.app/ The servers are freebies and really slow so please be patient while navigating the site.  
-The backend is hosted on Heroku and API calls can be made to https://black-board-engage.herokuapp.com/ I'll attach a link with all the api calls below.  
+The backend is hosted on Heroku and API calls can be made to https://black-board-engage.herokuapp.com/ link with all the api calls: https://docs.google.com/document/d/1PJS0L92Y5BJGDovEE4Jix1jCiVFlZAN7yFYNz3DGCIQ/edit?usp=sharing   
 All data is saved to my MongoDB cloud servers and schema for the same can be found in server/schemas.  
 So while stress testing or trying to break the application please do this instead of using the website so it does not affect other users:
 1. Clone the master branch repo onto a local folder with git clone.  
