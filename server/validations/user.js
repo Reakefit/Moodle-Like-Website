@@ -19,7 +19,7 @@ export const userValidate = (data) => {
     errors.userId = "userId field is required";
   } else if (!Validator.isNumeric(data.userId)) {
     errors.userId = "userId is invalid";
-  } else if (!Validator.isLength(data.userId, { min: 6, max: 30 } )) {
+  } else if (!Validator.isLength(data.userId, { min: 5, max: 30 } )) {
     errors.userId = "Must be between 6 to 30 digits"
   }
 
