@@ -6,6 +6,7 @@ import user from './routes/users.js';
 import course from './routes/courses.js';
 import channels from './routes/channels.js';
 import messages from './routes/messages.js';
+import config from 'dotenv';
 
 import { URI } from './config/keys.js';
 
